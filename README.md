@@ -25,9 +25,11 @@ This is a server API to find the less polluted route from one point to another i
         ```
             $ ./manage.py makemigrations  
         ```
+
         ```
             $ ./manage.py migrate
         ```
+
         ```
             $ sudo ./manage.py runserver (address):(port)  
         ```
