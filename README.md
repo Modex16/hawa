@@ -23,7 +23,7 @@ This is a server API to find the less polluted route from one point to another i
 * Deploying server in development mode
     - Run following command in the server directory:
 
-        ```
+        
 
             $ ./manage.py makemigrations  
 
@@ -31,6 +31,6 @@ This is a server API to find the less polluted route from one point to another i
 
             $ sudo ./manage.py runserver (address):(port)  
 
-        ```
+
 
 Now your API server will be listening the HTTP requests at your mentioned address and port
