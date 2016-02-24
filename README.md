@@ -28,3 +28,7 @@ This is a server API to find the less polluted route from one point to another i
       $ sudo ./manage.py runserver (address):(port)
    ```
 Now your API server will be listening the HTTP requests at your mentioned address and port
+
+* Usage instructions
+  - send a GET request to the url (address):(port)/get_hawa/get/?source_lat=<source_lat>&source_long=<source_long>&dest_lat=<destination_lat>&dest_long=<destination_long>
+with your specified source coordinates and destination coordinates in lat long form
