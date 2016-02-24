@@ -22,15 +22,12 @@ This is a server API to find the less polluted route from one point to another i
 
 * Deploying server in development mode
     - Run following command in the server directory:
+
         ```
             $ ./manage.py makemigrations  
-        ```
 
-        ```
             $ ./manage.py migrate
-        ```
 
-        ```
             $ sudo ./manage.py runserver (address):(port)  
         ```
 
