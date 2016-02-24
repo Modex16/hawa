@@ -45,38 +45,52 @@ namespace whereAir
 
         private async void FacebookLoginButton_Click(object sender, RoutedEventArgs e)
         {
-            SetLoading();
-
-            FBPermissions permissions = new FBPermissions(PermissionList);
-            FBResult result = await User.FBAccount.LoginAsync(permissions);
-
-            if (result.Succeeded)
+            try
             {
-                
-                this.Frame.Navigate(typeof(MainPage));
+                SetLoading();
+
+                FBPermissions permissions = new FBPermissions(PermissionList);
+                FBResult result = await User.FBAccount.LoginAsync(permissions);
+
+                if (result.Succeeded)
+                {
+
+                    this.Frame.Navigate(typeof(MainPage));
+                }
+                else
+                {
+                    UnsetLoading();
+                    await new MessageDialog("Unable to Login. Try to Login Again.").ShowAsync();
+                }
             }
-            else
+            catch
             {
-                UnsetLoading();
-                await new MessageDialog("Unable to Login. Try to Login Again.").ShowAsync();
+                // continue
             }
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            SetLoading();
+            try
+            {
+                SetLoading();
 
-            FBPermissions permissions = new FBPermissions(PermissionList);
-            FBResult result = await User.FBAccount.LoginAsync(permissions);
-            
-            if (result.Succeeded)
-            {
-                
-                this.Frame.Navigate(typeof(MainPage));
+                FBPermissions permissions = new FBPermissions(PermissionList);
+                FBResult result = await User.FBAccount.LoginAsync(permissions);
+
+                if (result.Succeeded)
+                {
+
+                    this.Frame.Navigate(typeof(MainPage));
+                }
+                else
+                {
+                    UnsetLoading();
+                }
             }
-            else
+            catch
             {
-                UnsetLoading();
+                // continue
             }
         }
 

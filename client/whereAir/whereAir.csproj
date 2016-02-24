@@ -168,11 +168,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\sharicles\sharicles\sharicles\bin\ARM\Debug\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\winsdkfb\FBWinSDK\FBSDK-UWP\FBSDK-UWP\FBSDK-UWP.vcxproj">
       <Project>{973a943b-ff77-4267-8f30-f5fe2b7f5583}</Project>
       <Name>Facebook</Name>
