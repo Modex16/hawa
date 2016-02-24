@@ -161,7 +161,6 @@ namespace whereAir
 
         private double angleFromCoordinate(double lat1, double long1, double lat2, double long2)
         {
-
             double dLon = (long2 - long1);
 
             double y = Math.Sin(dLon) * Math.Cos(lat2);
