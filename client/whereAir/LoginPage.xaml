@@ -1,0 +1,37 @@
+﻿<Page
+    x:Class="whereAir.LoginPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:whereAir"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" RequestedTheme="Dark">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" HorizontalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Image Source="Assets/Health_Screen.jpg" HorizontalAlignment="Center" 
+               Width="720" Grid.Row="0" VerticalAlignment="Top"/>
+        <TextBlock FontFamily="Segoe UI" Grid.Row="1" HorizontalAlignment="Center"
+                   Text="whereAir" FontSize="40"/>
+        <Grid HorizontalAlignment="Center" Grid.Row="2" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <CheckBox Content="COPD(Chronic Obstructive Pulmonary Disease)" Grid.Row="0" x:Name="COPDCheckBox"/>
+            <CheckBox Grid.Row="1" x:Name="AsthmaCheckBox" Content="Asthma"/>
+            <CheckBox Grid.Row="2" x:Name="OtherLungDiseasesCheckBox" Content="Other Lung Diseases"/>
+            <CheckBox Grid.Row="3" x:Name="NoneCheckBox" Content="None"/>
+        </Grid>
+        <Button HorizontalAlignment="Center" Margin="0,10,0,0" x:Name="Login" Grid.Row="4" Width="175"
+                Content="Choose Path" Click="Login_Click"/>
+    </Grid>
+</Page>
