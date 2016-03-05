@@ -72,115 +72,135 @@ namespace whereAir
 
         private async void SetMapPosition()
         {
-            FindLocation = MainStackPanel.Children[0];
-            MainStackPanel.Children.RemoveAt(0);
-
-            var accessStatus = await Geolocator.RequestAccessAsync();
-            switch (accessStatus)
+            try
             {
-                case GeolocationAccessStatus.Allowed:
-                    // Show "Finding your Location"
-                    MainStackPanel.Children.Insert(0, FindLocation);
-                    //BasicGeoposition snPosition = new BasicGeoposition() { Latitude = 25.367, Longitude = 82.996 };
+                FindLocation = MainStackPanel.Children[0];
+                MainStackPanel.Children.RemoveAt(0);
 
-                    // Get the current location.
-                    Geolocator geolocator = new Geolocator();
-                    Geoposition pos = await geolocator.GetGeopositionAsync();
-                    Geopoint myLocation = pos.Coordinate.Point;
-                    //Geopoint myLocation = new Geopoint(snPosition);
+                var accessStatus = await Geolocator.RequestAccessAsync();
+                switch (accessStatus)
+                {
+                    case GeolocationAccessStatus.Allowed:
+                        // Show "Finding your Location"
+                        MainStackPanel.Children.Insert(0, FindLocation);
+                        //BasicGeoposition snPosition = new BasicGeoposition() { Latitude = 25.367, Longitude = 82.996 };
 
-                    MainStackPanel.Children.RemoveAt(0);
+                        // Get the current location.
+                        Geolocator geolocator = new Geolocator();
+                        Geoposition pos = await geolocator.GetGeopositionAsync();
+                        Geopoint myLocation = pos.Coordinate.Point;
+                        //Geopoint myLocation = new Geopoint(snPosition);
 
-                    await MapControl1.TrySetViewAsync(myLocation, 14.5);
+                        MainStackPanel.Children.RemoveAt(0);
 
-                    MapIcon mapIcon1 = new MapIcon() { Location = myLocation, Title = "Your Location" };
-                    MapControl1.MapElements.Add(mapIcon1);
+                        await MapControl1.TrySetViewAsync(myLocation, 14.5);
 
-                    SourceMapIcon.Location = myLocation;
-                    SourcePosition = myLocation.Position;
-                    MapControl1.MapElements.Add(SourceMapIcon);
+                        MapIcon mapIcon1 = new MapIcon() { Location = myLocation, Title = "Your Location" };
+                        MapControl1.MapElements.Add(mapIcon1);
 
-                    MapFindProgressBar.IsActive = false;
-                    MapFindTextBlock.Visibility = Visibility.Collapsed;
+                        SourceMapIcon.Location = myLocation;
+                        SourcePosition = myLocation.Position;
+                        MapControl1.MapElements.Add(SourceMapIcon);
 
-                    break;
+                        MapFindProgressBar.IsActive = false;
+                        MapFindTextBlock.Visibility = Visibility.Collapsed;
 
-                case GeolocationAccessStatus.Denied:
-                    // Handle the case  if access to location is denied.
-                    await new MessageDialog("Seems like you didn't allowed us for using Locations Services or your Location " +
-                        "Setting is turned off. This App will not work without Locations Services. Thanks!!").ShowAsync();
-                    Application.Current.Exit();
-                    break;
+                        break;
 
-                case GeolocationAccessStatus.Unspecified:
-                    // Handle the case if  an unspecified error occurs.
-                    await new MessageDialog("Seems like you didn't allowed us for using Locations Services or your Location " +
-                        "Setting is turned off. This App will not work without Locations Services. Thanks!!").ShowAsync();
-                    Application.Current.Exit();
-                    break;
+                    case GeolocationAccessStatus.Denied:
+                        // Handle the case  if access to location is denied.
+                        await new MessageDialog("Seems like you didn't allowed us for using Locations Services or your Location " +
+                            "Setting is turned off. This App will not work without Locations Services. Thanks!!").ShowAsync();
+                        Application.Current.Exit();
+                        break;
+
+                    case GeolocationAccessStatus.Unspecified:
+                        // Handle the case if  an unspecified error occurs.
+                        await new MessageDialog("Seems like you didn't allowed us for using Locations Services or your Location " +
+                            "Setting is turned off. This App will not work without Locations Services. Thanks!!").ShowAsync();
+                        Application.Current.Exit();
+                        break;
+                }
             }
-
+            catch
+            {
+                // continue
+            }
         }
 
         private void MapControl1_MapTapped(MapControl sender, MapInputEventArgs args)
         {
-            var tappedGeoPosition = args.Location.Position;
-            switch (Selected)
+            try
             {
-                case ToggleClick.None:
-                    break;
-                case ToggleClick.Source:
-                    SourcePosition = tappedGeoPosition;
+                var tappedGeoPosition = args.Location.Position;
+                switch (Selected)
+                {
+                    case ToggleClick.None:
+                        break;
+                    case ToggleClick.Source:
+                        SourcePosition = tappedGeoPosition;
 
-                    DestinationButton.IsEnabled = true;
-                    SourceButton.IsEnabled = true;
-                    DestinationButton.IsChecked = false;
-                    SourceButton.IsChecked = false;
+                        DestinationButton.IsEnabled = true;
+                        SourceButton.IsEnabled = true;
+                        DestinationButton.IsChecked = false;
+                        SourceButton.IsChecked = false;
 
-                    MapControl1.MapElements.Remove(SourceMapIcon);
-                    SourceMapIcon.Location = new Geopoint(SourcePosition.Value);
-                    MapControl1.MapElements.Add(SourceMapIcon);
+                        MapControl1.MapElements.Remove(SourceMapIcon);
+                        SourceMapIcon.Location = new Geopoint(SourcePosition.Value);
+                        MapControl1.MapElements.Add(SourceMapIcon);
 
-                    Selected = ToggleClick.None;
-                    break;
-                case ToggleClick.Destination:
-                    DestinationPosition = tappedGeoPosition;
+                        Selected = ToggleClick.None;
+                        break;
+                    case ToggleClick.Destination:
+                        DestinationPosition = tappedGeoPosition;
 
-                    SourceButton.IsEnabled = true;
-                    DestinationButton.IsEnabled = true;
-                    DestinationButton.IsChecked = false;
-                    SourceButton.IsChecked = false;
+                        SourceButton.IsEnabled = true;
+                        DestinationButton.IsEnabled = true;
+                        DestinationButton.IsChecked = false;
+                        SourceButton.IsChecked = false;
 
-                    MapControl1.MapElements.Remove(DestinationMapIcon);
-                    DestinationMapIcon.Location = new Geopoint(DestinationPosition.Value);
-                    MapControl1.MapElements.Add(DestinationMapIcon);
+                        MapControl1.MapElements.Remove(DestinationMapIcon);
+                        DestinationMapIcon.Location = new Geopoint(DestinationPosition.Value);
+                        MapControl1.MapElements.Add(DestinationMapIcon);
 
-                    Selected = ToggleClick.None;
-                    break;
-                default:
-                    break;
+                        Selected = ToggleClick.None;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch
+            {
+                // continue
             }
         }
 
         private async void FindButton_Click(object sender, RoutedEventArgs e)
         {
-            if (SourcePosition == null && DestinationPosition == null)
+            try
             {
-                await new MessageDialog("Please provide Source as well as Destination Positions.").ShowAsync();
+                if (SourcePosition == null && DestinationPosition == null)
+                {
+                    await new MessageDialog("Please provide Source as well as Destination Positions.").ShowAsync();
+                }
+                else if (SourcePosition == null)
+                {
+                    await new MessageDialog("Please provide Source Position.").ShowAsync();
+                }
+                else if (DestinationPosition == null)
+                {
+                    await new MessageDialog("Please provide Destination Position.").ShowAsync();
+                }
+                else
+                {
+                    MainStackPanel.Children.Insert(0, FindLocation);
+                    MapFindTextBlock.Text = "Finding your Route";
+                    this.Frame.Navigate(typeof(FinalRoute));
+                }
             }
-            else if (SourcePosition == null)
+            catch
             {
-                await new MessageDialog("Please provide Source Position.").ShowAsync();
-            }
-            else if (DestinationPosition == null)
-            {
-                await new MessageDialog("Please provide Destination Position.").ShowAsync();
-            }
-            else
-            {
-                MainStackPanel.Children.Insert(0, FindLocation);
-                MapFindTextBlock.Text = "Finding your Route";
-                this.Frame.Navigate(typeof(FinalRoute));
+                // continue
             }
         }
 
